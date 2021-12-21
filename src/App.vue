@@ -1,17 +1,48 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <el-button type="primary" @click="open1" size="small">编程式打开ElementUI Dialog1</el-button>
+    <el-button type="primary" @click="open2" size="small">编程式打开ElementUI Dialog2</el-button>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import elementDialog1 from "./elementDialog1";
+import elementDialog2 from './elementDialog2'
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  data(){
+    return{
+      form: {
+        name: '测试',
+        age: '23',
+        phone:"134xxxxxxxx,151xxxxxxxx"
+      },
+    }
+  },
+  methods: {
+     open1() {
+      const phone1=this.form.phone.split(',')[0]
+      const phone2=this.form.phone.split(',')[0]
+         this.$openDialog(elementDialog1)({
+          form:{
+            ...this.form,
+            phone1,
+            phone2
+          },
+        }).then(()=>{
+         this.$message.success('编辑成功');
+       }).catch( ()=>{
+           this.$message.info('取消编辑');
+         })
+    },
+    open2(){
+  this.$openDialog(elementDialog2)({})
+      .then(()=>{
+        this.$message.success('确定')
+      }).catch(()=>{
+        this.$message.info('取消')
+  })
+    }
   }
 }
 </script>
